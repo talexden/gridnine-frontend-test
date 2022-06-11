@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {createAPI} from './services/api';
 import {fetchGuitars} from './store/api-action';
 import {redirect} from './store/middlewares/redirect';
 import {rootReducer} from './store/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
+import {createAPI} from './servers/api';
 
 
 const api = createAPI();

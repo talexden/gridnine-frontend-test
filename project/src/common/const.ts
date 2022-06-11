@@ -2,11 +2,14 @@ export const HIDDEN_TAB_INDEX = -1;
 
 export enum AppRoute {
   Main = '/',
-  Card = '/card:cardId',
+  Catalog = '/catalog',
 }
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+export enum APIRoute {
+  BackendUrl = 'https://ya.ru:9999',
+}
+
+export enum ErrorTexts {
+  LoadGuitarsFailMessage = 'Сервер не доступен. Попробуйте попозже',
+  CommentPostFailMessage = 'Не удалось отправить комментарий. Попробуйте попозже',
 }
