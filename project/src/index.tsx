@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {fetchGuitars} from './store/api-action';
+import App from './components/app/app';
+import {createAPI} from './services/api';
+import {fetchFlights} from './store/api-action';
 import {redirect} from './store/middlewares/redirect';
 import {rootReducer} from './store/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
-import App from './components/app/app';
-import {createAPI} from './servers/api';
+import './index.css';
 
 
 const api = createAPI();
@@ -23,7 +24,7 @@ const store = configureStore({
     }).concat(redirect),
 });
 
-store.dispatch(fetchGuitars());
+store.dispatch(fetchFlights());
 
 ReactDOM.render(
   <React.StrictMode>

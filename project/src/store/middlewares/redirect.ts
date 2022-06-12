@@ -1,6 +1,6 @@
 import browserHistory from '../../browser-history';
 import {Middleware} from 'redux';
-import {StateType} from '../../types/stateType';
+import {StateType} from '../../types/state-type';
 import {ActionType} from '../../types/action-type';
 
 export const redirect: Middleware<unknown, StateType> =

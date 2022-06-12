@@ -1,0 +1,13 @@
+.page {
+  background-color: var(--light-gray);
+}
+
+.page__main {
+  margin: auto;
+}
+
+.main {
+  display: flex;
+  width: 945px;
+  background-color: var(--white);
+}

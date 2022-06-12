@@ -1,12 +1,12 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
-import {StateType} from './stateType';
+import {StateType} from './state-type';
 import {Action} from 'redux';
 
 export enum ActionType {
   SetIsLoaded = '/setIsLoaded',
   SetIsLoading = '/setIsLoading',
-  SetTickets = '/setTickets',
+  SetFlights = '/setFlights',
   RedirectToRoute = '/redirectToRoute',
 }
 

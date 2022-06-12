@@ -1,0 +1,81 @@
+.sort-section {
+  width: 255px;
+}
+
+.form {
+  padding: 34px 10px 25px 23px;
+}
+
+.form__fieldset {
+  margin: 40px 0 0;
+}
+
+.form__fieldset:nth-child(n+3) {
+  margin-top: 16px;
+}
+
+.fieldset {
+  padding: 0;
+  border: none;
+}
+
+.legend {
+  font-size: 15px;
+}
+
+.fieldset__list {
+  width: 255px;
+  margin: 17px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fieldset__label {
+  display: block;
+  position: relative;
+  padding-left: 16px;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.fieldset__label--airlines {
+  display: flex;
+  width: 222px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.fieldset__label-span {
+  white-space: nowrap;
+  padding-left: 3px;
+  letter-spacing: -0.4px;
+}
+
+.fieldset__label-span:first-child {
+  margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fieldset__label--price {
+  padding: 0;
+}
+
+.fieldset__text {
+  margin: 16px 0 0 3px;
+  height: 15px;
+  width: 165px;
+}
+
+.fieldset__item:first-of-type .fieldset__text {
+  margin-top: 0;
+}
+
+.fieldset__check {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

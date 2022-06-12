@@ -2,14 +2,13 @@ export const HIDDEN_TAB_INDEX = -1;
 
 export enum AppRoute {
   Main = '/',
-  Catalog = '/catalog',
+  Search = '/search',
 }
 
 export enum APIRoute {
-  BackendUrl = 'https://ya.ru:9999',
+  Search = '/search',
 }
 
 export enum ErrorTexts {
   LoadGuitarsFailMessage = 'Сервер не доступен. Попробуйте попозже',
-  CommentPostFailMessage = 'Не удалось отправить комментарий. Попробуйте попозже',
 }

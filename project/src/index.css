@@ -228,9 +228,9 @@ button:-moz-focusring,
  * Correct the padding in Firefox.
  */
 
-fieldset {
-  padding: 0.35em 0.75em 0.625em;
-}
+/*fieldset {*/
+/*  padding: 0.35em 0.75em 0.625em;*/
+/*}*/
 
 /**
  * 1. Correct the text wrapping in Edge and IE.
@@ -354,32 +354,42 @@ template {
 
 
 :root {
-  --blue: #2196F3;
-  --blue-light: #F3F7FA;
-  --blue-lighty: #F1FCFF;
-  --blue-gray: #9ABBCE;
-  --gray-light: #A0B0B9;
-  --gray-border: #DFE5EC;
-  --black-natural: #4A4A4A;
+  --orange: #FFAF71;      /* button */
+  --deep-orange: #FFB168; /* text */
+  --blue: #0088C4;        /* header, text */
+  --deep-blue: #0084BF;  /* blue line */
+  --blue-gray: #425667;   /* filter text */
+  --lighty-gray: #E5E5E5; /* up line card */
+  --grayny: #A2A2A2;      /* down line card */
+  --light-grany: #F1F1F1;  /* button */
+  --light-gray: #D9D9D9;  /* background */
+  --gray: #777777;        /* inputs border*/
+  --dark-gray: #575454;    /* button border */
+  --black-natural: #1C1C1C;
   --white: #FFFFFF;
-  --logo-shadow-color: #CDD9E3;
-  --box-shadow-color: #E6E6E6;
-  --img-checkbox: url('../public/image/checkbox.svg');
-  --img-checkbox-checked: url('../public/image/checkbox-checked.svg');
+  --black: #000000;
+  --arrow-right: url('../public/image/arrow-right.svg');
+  --clock: url('../public/image/clock.svg');
+
 }
 
 
 body {
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  font-family: 'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--black-natural);
+  height: 100%;
 }
 
 .container {
   display: block;
   margin: auto;
+}
+
+.button {
+  display: block;
+  text-decoration: none;
 }
 
 .visually-hidden {

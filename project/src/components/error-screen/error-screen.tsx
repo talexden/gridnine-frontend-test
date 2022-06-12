@@ -1,4 +1,3 @@
-import Header from '../header/header';
 import {HIDDEN_TAB_INDEX} from '../../common/const';
 import React from 'react';
 // import {AppRoute} from '../../const';
@@ -6,9 +5,6 @@ import React from 'react';
 function ErrorScreen(): JSX.Element {
   return (
     <div className="page">
-      <div className="page__wrapper container">
-        <Header/>
-      </div>
       <div className="page-wrapper container">
         <main className="page__main main">
           <h1 className="visually-hidden" aria-hidden tabIndex={HIDDEN_TAB_INDEX}>Авиабилеты</h1>

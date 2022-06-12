@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {AppRoute} from '../common/const';
 import {ActionType} from '../types/action-type';
+import {FlightType} from '../types/flight-type';
 
 
 export const redirectToRoute = createAction(
@@ -9,10 +10,10 @@ export const redirectToRoute = createAction(
     {payload: url}
   ));
 
-export const setTickets = createAction(
-  ActionType.SetTickets,
-  (tickets: TicketType[]) => (
-    {payload: tickets}
+export const setFlights = createAction(
+  ActionType.SetFlights,
+  (flights: FlightType[]) => (
+    {payload: flights}
   ));
 
 export const setIsLoading = createAction(ActionType.SetIsLoading);

@@ -1,0 +1,39 @@
+.card-header {
+  display: flex;
+  justify-content: center;
+  min-height: 43px;
+  padding: 3px 14px;
+  background-color: var(--blue);
+  box-sizing: border-box;
+}
+
+.card-header__text-wrapper {
+  margin-left: auto;
+  color: var(--white);
+}
+
+.card-header__price {
+  margin: 0;
+  font-size: 21px;
+  line-height: 25px;
+  text-align: right;
+}
+
+.card-header__price-description {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 10px;
+  letter-spacing: -0.6px;
+}
+
+.card__button {
+  width: 100%;
+  min-height: 39px;
+  color: var(--white);
+  font-size: 16px;
+  line-height: 39px;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: var(--deep-orange);
+}

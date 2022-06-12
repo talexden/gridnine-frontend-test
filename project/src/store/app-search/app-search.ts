@@ -2,17 +2,18 @@ import {createReducer} from '@reduxjs/toolkit';
 
 import {
   setIsLoading,
-  setIsLoaded, setTickets
+  setIsLoaded, setFlights
 } from '../action';
+import {FlightType} from '../../types/flight-type';
 
-export type AppFilterType = {
+export type AppSearchType = {
   isLoading: boolean,
-  tickets: TicketsType[]
+  flights: FlightType[]
 }
 
-const initialStore: AppFilterType = {
+const initialStore: AppSearchType = {
   isLoading: false,
-  tickets: []
+  flights: [],
 };
 
 export const AppSearch = createReducer(initialStore, (builder)=>{
@@ -27,7 +28,7 @@ export const AppSearch = createReducer(initialStore, (builder)=>{
       state.isLoading = true;
     })
 
-    .addCase(setTickets, (state, action) => {
-      state.tickets = action.payload;
+    .addCase(setFlights, (state, action) => {
+      state.flights = action.payload;
     });
 });

@@ -24,7 +24,7 @@ describe('Middleware: redirect', () => {
   });
 
   it('should be redirect to /catalog', () => {
-    const catalog = `${AppRoute.Catalog}`;
+    const catalog = `${AppRoute.Search}`;
     store.dispatch(redirectToRoute(catalog));
     expect(fakeHistory.location.pathname).toBe(catalog);
     expect(store.getActions()).toEqual([
@@ -33,7 +33,7 @@ describe('Middleware: redirect', () => {
   });
 
   it('should not to be redirect /lose because bad action', () => {
-    store.dispatch({type: 'UNKNOWN_ACTION', payload: AppRoute.Main});
-    expect(fakeHistory.location.pathname).not.toBe(AppRoute.Main);
+    store.dispatch({type: 'UNKNOWN_ACTION', payload: AppRoute.Search});
+    expect(fakeHistory.location.pathname).not.toBe(AppRoute.Search);
   });
 });
