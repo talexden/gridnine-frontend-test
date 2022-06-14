@@ -1,5 +1,4 @@
 import './card.css';
-import React from 'react';
 import Offer from '../offer/offer';
 import {FlightType} from '../../types/flight-type';
 

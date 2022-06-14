@@ -1,4 +1,4 @@
-import React, {FormEvent} from 'react';
+import {FormEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCheckCarriers} from '../../store/action';
 import {CarrierCheckboxType} from '../../types/checkbox-type';
@@ -13,7 +13,7 @@ function CheckCarrier ({checkCarrier}: CheckCarrierPropsType):JSX.Element {
   const checkCarriers = useSelector(getCheckCarriers);
   const dispatch = useDispatch();
 
-  const handleOnClickCheckAirlines = (evt: FormEvent<HTMLInputElement>) => {
+  const handleOnClick = (evt: FormEvent<HTMLInputElement>) => {
     const {checked} = evt.currentTarget;
     const newCheckCarriers = checkCarriers.map((check)=>(
       check.value === value ? {...check, isCheck: checked} : check
@@ -26,7 +26,7 @@ function CheckCarrier ({checkCarrier}: CheckCarrierPropsType):JSX.Element {
       <label className="fieldset__label fieldset__label--airlines">
         <span className="fieldset__label-span">{`- ${label}`}</span>
         <span className="fieldset__label-span">{`от ${bestPrice} р.`}</span>
-        <input onClick={handleOnClickCheckAirlines} className="fieldset__check" type="checkbox" value={value}/>
+        <input onClick={handleOnClick} className="fieldset__check" type="checkbox" value={value}/>
       </label>
     </li>
   );

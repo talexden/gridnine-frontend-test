@@ -5,6 +5,7 @@ import {Action} from 'redux';
 
 export enum ActionType {
   SetCheckCarriers = '/setCheckCarriers',
+  SetCheckFlightChanges = '/setCheckFlightChanges',
   SetCount = '/setCount',
   SetFlights = '/setFlights',
   SetIsLoaded = '/setIsLoaded',

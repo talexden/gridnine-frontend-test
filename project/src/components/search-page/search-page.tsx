@@ -1,5 +1,4 @@
 import './search-page.css';
-import React from 'react';
 import Catalog from '../catalog/catalog';
 import SortSection from '../sort-section/sort-section';
 import {HIDDEN_TAB_INDEX} from '../../common/const';

@@ -18,13 +18,18 @@ const getSegments = (segments: any[]): FlightSegment[] => segments.map((segment)
 ));
 
 
-const getLegs = (legs: any[]): LegType[] => legs.map((leg)=> Object.assign(
-  {},
-  {
-    duration: leg.duration,
-    segments: getSegments(leg.segments),
-  },
-));
+const getLegs = (legs: any[]): LegType[] => legs.map((leg)=> {
+  const legSegments = getSegments(leg.segments);
+  const legDuration = leg.duration;
+  return Object.assign(
+    {},
+    {
+      flightChange: legSegments.length - 1,
+      duration: legDuration,
+      segments: legSegments,
+    },
+  );
+});
 
 
 export class Adapter {

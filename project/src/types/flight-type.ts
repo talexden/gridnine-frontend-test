@@ -38,6 +38,7 @@ export type FlightSegment = {
 }
 
 export type LegType = {
+  flightChange: number,
   duration : number,
   segments : FlightSegment[],
 }

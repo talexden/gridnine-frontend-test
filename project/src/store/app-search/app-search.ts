@@ -5,7 +5,7 @@ import {
   setFlights,
   setCount,
   setOrigFlights,
-  setSortKey, setCheckCarriers
+  setSortKey, setCheckCarriers, setCheckFlightChanges
 } from '../action';
 import {FlightType} from '../../types/flight-type';
 import {SortKey} from '../../common/const';
@@ -41,6 +41,10 @@ export const AppSearch = createReducer(initialStore, (builder)=>{
 
     .addCase(setCheckCarriers, (state, action) => {
       state.checkCarriers = action.payload;
+    })
+
+    .addCase(setCheckFlightChanges, (state, action) => {
+      state.checkFlightChanges = action.payload;
     })
 
     .addCase(setIsLoaded, (state) => {
