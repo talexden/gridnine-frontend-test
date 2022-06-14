@@ -49,7 +49,7 @@ export type CarrierType = {
   airlineCode : string
 }
 
-export type PriceType = {
+export type FlightPriceType = {
   amount : string,
   currency : string,
   currencyCode : string
@@ -58,7 +58,7 @@ export type PriceType = {
 
 export type FlightType = {
   carrier: CarrierType,
-  priceTotal: PriceType
+  priceTotal: FlightPriceType
   legs: LegType[],
   flightToken: string;
 }

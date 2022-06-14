@@ -5,7 +5,7 @@ import {
   setFlights,
   setCount,
   setOrigFlights,
-  setSortKey, setCheckCarriers, setCheckFlightChanges, renderFlights
+  setSortKey, setCheckCarriers, setCheckFlightChanges, renderFlights, setFilterPrice
 } from '../action';
 import {FlightType} from '../../types/flight-type';
 import {SortKey} from '../../common/const';
@@ -13,10 +13,12 @@ import {ShowCount} from '../logic/count/count';
 import Flight from '../logic/flight/flight';
 import Checkbox from '../logic/checkbox/checkbox';
 import {CarrierCheckboxType, FlightChangeCheckboxType} from '../../types/checkbox-type';
+import {FilterPriceType} from '../../types/filter-price-type';
 
 export type AppSearchType = {
   checkCarriers: CarrierCheckboxType[],
   checkFlightChanges: FlightChangeCheckboxType[],
+  filterPrice: FilterPriceType,
   isLoading: boolean,
   isShowMoreButton: boolean,
   flightsByCheck: FlightType[],
@@ -30,6 +32,7 @@ export type AppSearchType = {
 const initialStore: AppSearchType = {
   checkCarriers: [],
   checkFlightChanges: [],
+  filterPrice: {priceMin: 0, priceMax: 0},
   isLoading: false,
   isShowMoreButton: true,
   flightsByCheck: [],
@@ -59,6 +62,10 @@ export const AppSearch = createReducer(initialStore, (builder)=>{
       state.checkFlightChanges = action.payload;
     })
 
+    .addCase(setFilterPrice, (state, action) => {
+      state.filterPrice = action.payload;
+    })
+
     .addCase(setIsLoaded, (state) => {
       state.isLoading = false;
     })
@@ -78,9 +85,10 @@ export const AppSearch = createReducer(initialStore, (builder)=>{
 
     .addCase(setOrigFlights, (state, action) => {
       state.origFlights = action.payload;
-      const checkboxes = Checkbox.getCheckboxSets(state.origFlights);
-      state.checkFlightChanges = checkboxes.flightChangesSet;
-      state.checkCarriers = checkboxes.carriersSet;
+      const flightInit = Flight.init(state.origFlights);
+      state.checkFlightChanges = flightInit.flightChangesSet;
+      state.checkCarriers = flightInit.carriersSet;
+      state.filterPrice = flightInit.priceInit;
     })
 
     .addCase(setSortKey, (state, action) => {

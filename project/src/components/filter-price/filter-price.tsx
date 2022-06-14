@@ -1,5 +1,31 @@
+import {ChangeEvent, KeyboardEvent} from 'react';
+import {getFilterPrice} from '../../store/app-search/selectors';
+import {useDispatch, useSelector} from 'react-redux';
+import {setFilterPrice} from '../../store/action';
 
 function FilterPrice () {
+  let filterPrice = useSelector(getFilterPrice);
+  const dispatch = useDispatch();
+
+  const handleChangePrice = ( evt: ChangeEvent<HTMLInputElement>) => {
+    let {value} = evt.target;
+    const {name} = evt.target;
+    value = value.replace(/\D/g, ''); // '[^0-9]' === '\D'
+    while (value[0] === '0') {
+      value = value.replace(/^0/, '');
+    }
+    filterPrice = {...filterPrice, [name]: Number(value)};
+  };
+
+  const handlePressEnter = ( evt: KeyboardEvent<HTMLInputElement>) => {
+    if ( evt.key === 'Enter') {
+      dispatch(setFilterPrice(filterPrice));
+    }
+  };
+
+  const handleOnBlur = () => {
+    dispatch(setFilterPrice(filterPrice));
+  };
 
   return(
     <fieldset className="fieldset form__fieldset form__fieldset--price">
@@ -8,13 +34,29 @@ function FilterPrice () {
         <li className="fieldset__item">
           <label className="fieldset__label fieldset__label--price">
             От
-            <input className="fieldset__text" type="text" placeholder="0"/>
+            <input
+              onKeyDown={handlePressEnter}
+              onChange={handleChangePrice}
+              onBlur={handleOnBlur}
+              className="fieldset__text"
+              type="text"
+              name="priceMin"
+              placeholder={String(filterPrice.priceMin)}
+            />
           </label>
         </li>
         <li className="sort__item">
           <label className="fieldset__label fieldset__label--price">
             До
-            <input className="fieldset__text" type="text" placeholder="10000"/>
+            <input
+              onKeyDown={handlePressEnter}
+              onChange={handleChangePrice}
+              onBlur={handleOnBlur}
+              className="fieldset__text"
+              type="text"
+              name="priceMax"
+              placeholder={String(filterPrice.priceMax)}
+            />
           </label>
         </li>
       </ul>

@@ -10,6 +10,7 @@ export enum ActionType {
   SetCheckFlightChanges = '/setCheckFlightChanges',
   SetCount = '/setCount',
   SetFlights = '/setFlights',
+  SetFilterPrice = '/setFilterPrice',
   SetIsLoaded = '/setIsLoaded',
   SetIsLoading = '/setIsLoading',
   SetOrigFlights = '/setOrigFlights',
