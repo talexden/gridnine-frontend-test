@@ -1,7 +1,7 @@
 import {FormEvent} from 'react';
 import {FlightChangeCheckboxType} from '../../types/checkbox-type';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCheckFlightChanges} from '../../store/action';
+import {renderFlights, setCheckFlightChanges} from '../../store/action';
 import {getCheckFlightChanges} from '../../store/app-search/selectors';
 
 
@@ -20,6 +20,7 @@ function CheckFlightChange ({checkFlightChange}: CheckFlightChangePropsType):JSX
       check.value === value ? {...check, isCheck: checked} : check
     ));
     dispatch(setCheckFlightChanges(newCheckFlightChanges));
+    dispatch(renderFlights());
   };
 
   return (

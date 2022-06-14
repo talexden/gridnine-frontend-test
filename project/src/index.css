@@ -380,6 +380,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--black-natural);
   height: 100%;
+  background-color: var(--light-gray);
 }
 
 .container {

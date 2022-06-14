@@ -9,10 +9,9 @@ type OfferPropsType = {
 }
 
 function Offer ({leg, carrier}: OfferPropsType):JSX.Element {
-  const {segments, duration} = leg;
+  const {segments, duration, flightChange} = leg;
   const {departureDate, departureAirport, departureCity} = segments[0];
   const {arrivalDate, arrivalAirport, arrivalCity} = segments[segments.length - 1];
-
   const travelDuration = `${duration/60^0} ч ${duration % 60} мин`;
 
   return (
@@ -37,9 +36,9 @@ function Offer ({leg, carrier}: OfferPropsType):JSX.Element {
         </div>
         <div className="info__steps-wrapper">
           <p
-            className={`info__steps${segments.length === 1 ? ' visually-hidden' : ''}`}
+            className={`info__steps${flightChange === 0 ? ' visually-hidden' : ''}`}
           >
-            {getFlightChangeName(segments.length - 1)}
+            {getFlightChangeName(flightChange)}
           </p>
         </div>
         <p className="info__carrier">

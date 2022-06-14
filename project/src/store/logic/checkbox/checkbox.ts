@@ -2,8 +2,13 @@ import {FlightType} from '../../../types/flight-type';
 import {getFlightChangeName} from '../../../common/utils';
 import {CarrierCheckboxType, FlightChangeCheckboxType} from '../../../types/checkbox-type';
 
+type GetCheckboxSetsType = {
+  flightChangesSet: FlightChangeCheckboxType[],
+  carriersSet: CarrierCheckboxType[],
+}
+
 class Checkbox {
-  static getCheckboxSets = (flights: FlightType[]): [FlightChangeCheckboxType[], CarrierCheckboxType[]] => {
+  static getCheckboxSets = (flights: FlightType[]): GetCheckboxSetsType => {
     const carriersMap = new Map<string, CarrierCheckboxType>();
     flights.forEach((flight) => {
       const key = flight.carrier.airlineCode;
@@ -23,7 +28,7 @@ class Checkbox {
       );
     });
     const carriersSet: CarrierCheckboxType[] = Array.from(carriersMap.values());
-    const flightChanges: number[] = [...new Set((flights.flatMap((flight) => flight.legs.map((leg) => (leg.segments.length -1)))))];
+    const flightChanges: number[] = [...new Set((flights.flatMap((flight) => flight.legs.map((leg) => leg.flightChange))))];
     const flightChangesSet = flightChanges.map((change)=> (
       {
         value: String(change),
@@ -31,7 +36,39 @@ class Checkbox {
         label: getFlightChangeName(change),
       }),
     );
-    return [flightChangesSet, carriersSet];
+    return {flightChangesSet, carriersSet};
+  };
+
+  static filterByCheckbox = (
+    flights: FlightType[],
+    checkCarriers: CarrierCheckboxType[],
+    checkFlightChanges: FlightChangeCheckboxType[],
+  ): FlightType[] => {
+    let flightsByCheck = [...flights];
+    if (checkCarriers.find((check) => check.isCheck)) {
+      flightsByCheck = [];
+      checkCarriers.forEach((check)=>{
+        if (check.isCheck) {
+          const flightsCarrier =  flights.filter((flight) => check.value === flight.carrier.airlineCode);
+          flightsByCheck = [...flightsCarrier, ...flightsByCheck];
+        }
+      });
+    }
+
+    if (checkFlightChanges.find((check) => check.isCheck)) {
+      const flightsByCarrier = [...flightsByCheck];
+      flightsByCheck = [];
+      checkFlightChanges.forEach((check) => {
+        if (check.isCheck) {
+          const filteredFlight = flightsByCarrier.filter((flight) => (
+            Number(check.value) === flight.legs[1].flightChange && Number(check.value) === flight.legs[0].flightChange
+          ));
+          flightsByCheck = [...new Set([...filteredFlight, ...flightsByCheck])];
+        }
+      });
+    }
+
+    return flightsByCheck;
   };
 }
 

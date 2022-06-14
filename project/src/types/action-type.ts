@@ -4,13 +4,14 @@ import {StateType} from './state-type';
 import {Action} from 'redux';
 
 export enum ActionType {
+  RenderFlights = '/renderFlights',
+  RedirectToRoute = '/redirectToRoute',
   SetCheckCarriers = '/setCheckCarriers',
   SetCheckFlightChanges = '/setCheckFlightChanges',
   SetCount = '/setCount',
   SetFlights = '/setFlights',
   SetIsLoaded = '/setIsLoaded',
   SetIsLoading = '/setIsLoading',
-  RedirectToRoute = '/redirectToRoute',
   SetOrigFlights = '/setOrigFlights',
   SetSortKey = '/setSortKey',
 }

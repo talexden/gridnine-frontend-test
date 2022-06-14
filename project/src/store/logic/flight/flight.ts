@@ -2,17 +2,17 @@ import {FlightType} from '../../../types/flight-type';
 import {SortKey} from '../../../common/const';
 import {sortFlights} from '../../../common/utils';
 
-const getShowArray = (flights: FlightType[], endIdx: number, startIdx = 0): FlightType[] => {
-  const result: FlightType[] = [];
-  for (let i = startIdx; i < endIdx; i++) {
-    result.push(flights[i]);
-  }
-  return result;
-};
-
-
 class Flight {
-  show = (flight: FlightType[], ShowCount: number): FlightType[] => getShowArray(flight, ShowCount);
+  #isShowMoreButton = true;
+
+  show = (flights: FlightType[], endIdx: number, startIdx = 0): FlightType[] => {
+    const resFlights = flights.slice(startIdx, endIdx);
+
+    this.#isShowMoreButton = flights.length !== resFlights.length;
+    return resFlights;
+  };
+
+  getIsShowMoreButton = () => this.#isShowMoreButton;
 
   sort = (flights: FlightType[], sortKey: SortKey): FlightType[] => sortFlights(flights, sortKey);
 

@@ -5,10 +5,10 @@ const getSegments = (segments: any[]): FlightSegment[] => segments.map((segment)
   {
     departureDate: segment.departureDate,
     departureAirport : segment.departureAirport,
-    departureCity : segment.departureCity,
+    departureCity : segment.departureCity || {uid : '', caption : ''}, // Битый тестовый json
     travelDuration : segment.travelDuration,
     arrivalDate : segment.arrivalDate,
-    arrivalCity : segment.arrivalCity,
+    arrivalCity : segment.arrivalCity || {uid : '', caption : ''}, // Битый тестовый json
     arrivalAirport : segment.arrivalAirport,
     flightNumber : segment.flightNumber,
     stops : segment.stops,

@@ -1,9 +1,7 @@
-.page {
-  background-color: var(--light-gray);
-}
-
 .page__main {
   margin: auto;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .main {

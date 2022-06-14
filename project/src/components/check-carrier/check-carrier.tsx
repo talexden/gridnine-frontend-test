@@ -1,6 +1,6 @@
 import {FormEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCheckCarriers} from '../../store/action';
+import {renderFlights, setCheckCarriers} from '../../store/action';
 import {CarrierCheckboxType} from '../../types/checkbox-type';
 import {getCheckCarriers} from '../../store/app-search/selectors';
 
@@ -19,6 +19,7 @@ function CheckCarrier ({checkCarrier}: CheckCarrierPropsType):JSX.Element {
       check.value === value ? {...check, isCheck: checked} : check
     ));
     dispatch(setCheckCarriers(newCheckCarriers));
+    dispatch(renderFlights());
   };
 
   return (

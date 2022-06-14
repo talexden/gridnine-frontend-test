@@ -11,6 +11,8 @@ export const redirectToRoute = createAction(
     {payload: url}
   ));
 
+export const renderFlights = createAction(ActionType.RenderFlights);
+
 export const setCheckCarriers = createAction(
   ActionType.SetCheckCarriers,
   (checkCarriers: CarrierCheckboxType[]) => (

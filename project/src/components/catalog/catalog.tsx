@@ -3,11 +3,12 @@ import {MouseEvent} from 'react';
 import Card from '../card/card';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCount} from '../../store/action';
-import {getShowFlights} from '../../store/app-search/selectors';
+import {getIsShowMoreButton, getShowFlights} from '../../store/app-search/selectors';
 
 
 function Catalog (): JSX.Element {
   const flights = useSelector(getShowFlights);
+  const isShowMoreButton = useSelector(getIsShowMoreButton);
   const dispatch = useDispatch();
 
   const handleOnClick = (evt: MouseEvent<HTMLAnchorElement>) => {
@@ -27,7 +28,7 @@ function Catalog (): JSX.Element {
       </ul>
       <a
         onClick={handleOnClick}
-        className="catalog__button button"
+        className={`catalog__button button${isShowMoreButton ? '' : ' visually-hidden'}`}
         href="#show-more"
       >
         Показать еще
