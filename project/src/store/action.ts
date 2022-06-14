@@ -1,7 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
-import {AppRoute} from '../common/const';
+import {AppRoute, SortKey} from '../common/const';
 import {ActionType} from '../types/action-type';
 import {FlightType} from '../types/flight-type';
+import {CarrierCheckboxType} from '../types/checkbox-type';
 
 
 export const redirectToRoute = createAction(
@@ -9,6 +10,14 @@ export const redirectToRoute = createAction(
   (url: AppRoute | string) => (
     {payload: url}
   ));
+
+export const setCheckCarriers = createAction(
+  ActionType.SetCheckCarriers,
+  (checkCarriers: CarrierCheckboxType[]) => (
+    {payload: checkCarriers}
+  ));
+
+export const setCount = createAction(ActionType.SetCount);
 
 export const setFlights = createAction(
   ActionType.SetFlights,
@@ -19,3 +28,14 @@ export const setFlights = createAction(
 export const setIsLoading = createAction(ActionType.SetIsLoading);
 export const setIsLoaded = createAction(ActionType.SetIsLoaded);
 
+export const setOrigFlights = createAction(
+  ActionType.SetOrigFlights,
+  (flights: FlightType[]) => (
+    {payload: flights}
+  ));
+
+export const setSortKey = createAction(
+  ActionType.SetSortKey,
+  (sortKey: SortKey) => (
+    {payload: sortKey}
+  ));

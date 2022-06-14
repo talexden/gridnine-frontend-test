@@ -58,6 +58,7 @@
 
 .info__date {
   margin: 0 5px;
+  color: var(--blue);
 }
 
 .info__travel-duration {

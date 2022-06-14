@@ -37,23 +37,28 @@ export type FlightSegment = {
     },
 }
 
-export type LegsType = {
+export type LegType = {
   duration : number,
   segments : FlightSegment[],
 }
 
-export type FlightType = {
-  carrier :
-    {
-      uid : string,
-      caption : string,
-      airlineCode : string
-    },
-  priceTotal :
-    {
-      amount : string,
-      currency : string,
-      currencyCode : string
-    },
-  legs : LegsType[],
+export type CarrierType = {
+  uid : string,
+  caption : string,
+  airlineCode : string
 }
+
+export type PriceType = {
+  amount : string,
+  currency : string,
+  currencyCode : string
+}
+
+
+export type FlightType = {
+  carrier: CarrierType,
+  priceTotal: PriceType
+  legs: LegType[],
+  flightToken: string;
+}
+

@@ -1,4 +1,4 @@
-import {FlightSegment, FlightType, LegsType} from '../../types/flight-type';
+import {FlightSegment, FlightType, LegType} from '../../types/flight-type';
 
 const getSegments = (segments: any[]): FlightSegment[] => segments.map((segment)=>Object.assign(
   {},
@@ -18,7 +18,7 @@ const getSegments = (segments: any[]): FlightSegment[] => segments.map((segment)
 ));
 
 
-const getLegs = (legs: any[]): LegsType[] => legs.map((leg)=> Object.assign(
+const getLegs = (legs: any[]): LegType[] => legs.map((leg)=> Object.assign(
   {},
   {
     duration: leg.duration,
@@ -28,13 +28,14 @@ const getLegs = (legs: any[]): LegsType[] => legs.map((leg)=> Object.assign(
 
 
 export class Adapter {
-  static adaptToClient({flight}: any): FlightType {
+  static adaptToClient({flight, flightToken}: any): FlightType {
     return Object.assign(
       {},
       {
         carrier: flight.carrier,
         priceTotal: flight.price.total,
         legs: getLegs(flight.legs),
+        flightToken: flightToken,
       });
   }
 }

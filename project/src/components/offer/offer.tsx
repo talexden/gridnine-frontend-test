@@ -1,32 +1,50 @@
 import './offer.css';
+import {CarrierType, LegType} from '../../types/flight-type';
+import {formatDateMMWW, formatTime, getFlightChangeName} from '../../common/utils';
 
-function Offer ():JSX.Element {
+
+type OfferPropsType = {
+  leg: LegType,
+  carrier: CarrierType,
+}
+
+function Offer ({leg, carrier}: OfferPropsType):JSX.Element {
+  const {segments, duration} = leg;
+  const {departureDate, departureAirport, departureCity} = segments[0];
+  const {arrivalDate, arrivalAirport, arrivalCity} = segments[segments.length - 1];
+
+  const travelDuration = `${duration/60^0} ч ${duration % 60} мин`;
+
   return (
     <section className="card__offer offer">
       <div className="offer__label-wrapper">
         <p className="offer__label">
-          Москва, ШЕРЕМЕТЬЕВО
-          <span className="offer__label-span"> (SVO)</span>
+          {`${departureCity.caption}, ${departureAirport.caption}`}
+          <span className="offer__label-span">{` ${departureAirport.uid}`}</span>
         </p>
         <p className="offer__label">
-          ЛОНДОН, Лондон, Хитроу
-          <span className="offer__label-span"> Хитроу (LHR)</span>
+          {`${arrivalCity.caption}, ${arrivalAirport.caption}`}
+          <span className="offer__label-span">{` ${arrivalAirport.uid}`}</span>
         </p>
       </div>
       <div className="offer__info info">
         <div className="info__timing">
-          <p className="info__time">20:40</p>
-          <p className="info__date">18 авг. вт</p>
-          <p className="info__travel-duration">14 ч 45 мин</p>
-          <p className="info__date">18 авг. вт</p>
-          <p className="info__time">09:25</p>
+          <p className="info__time">{`${formatTime(departureDate)}`}</p>
+          <p className="info__date">{`${formatDateMMWW(departureDate)}`}</p>
+          <p className="info__travel-duration">{travelDuration}</p>
+          <p className="info__date">{`${formatDateMMWW(arrivalDate)}`}</p>
+          <p className="info__time">{`${formatTime(arrivalDate)}`}</p>
         </div>
         <div className="info__steps-wrapper">
-          <p className="info__steps">1 пересадка</p>
+          <p
+            className={`info__steps${segments.length === 1 ? ' visually-hidden' : ''}`}
+          >
+            {getFlightChangeName(segments.length - 1)}
+          </p>
         </div>
         <p className="info__carrier">
           Рейс выполняет:
-          <span className="info__carrier-name"> LOT Polish Airlines</span>
+          <span className="info__carrier-name">{` ${carrier.airlineCode} ${carrier.caption}`}</span>
         </p>
       </div>
     </section>

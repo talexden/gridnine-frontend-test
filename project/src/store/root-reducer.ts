@@ -3,11 +3,11 @@ import {AppSearch} from './app-search/app-search';
 
 
 export enum NameSpace {
-  filter = 'FILTER',
+  Search = 'FILTER',
 }
 
 export const rootReducer = combineReducers({
-  [NameSpace.filter]: AppSearch,
+  [NameSpace.Search]: AppSearch,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

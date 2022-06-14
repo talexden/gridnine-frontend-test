@@ -1,8 +1,20 @@
 import './sort-section.css';
-import React from 'react';
-import {HIDDEN_TAB_INDEX} from '../../common/const';
+import React, {FormEvent} from 'react';
+import {HIDDEN_TAB_INDEX, SortKey} from '../../common/const';
+import {useDispatch, useSelector} from 'react-redux';
+import {setSortKey} from '../../store/action';
+import {getCheckCarriers} from '../../store/app-search/selectors';
+import CheckCarrier from '../check-carrier/check-carrier';
 
 function SortSection ():JSX.Element {
+  const dispatch = useDispatch();
+  const checkCarriers = useSelector(getCheckCarriers);
+
+  const handleOnClickRadio = (evt: FormEvent<HTMLInputElement>) => {
+    const sortKey = Number(evt.currentTarget.value);
+    dispatch(setSortKey(sortKey));
+  };
+
   return (
     <section className="sort-section main__sort-section">
       <h2 className="visually-hidden" tabIndex={HIDDEN_TAB_INDEX}>Сортировка</h2>
@@ -13,19 +25,19 @@ function SortSection ():JSX.Element {
             <li className="fieldset__item">
               <label className="fieldset__label">
                 - по возрастанию цены
-                <input className="fieldset__check" type="radio" name="sort" value="PriceLowFirst"/>
+                <input onChange={handleOnClickRadio} className="fieldset__check" type="radio" name="sort" value={SortKey.LowUp}/>
               </label>
             </li>
             <li className="sort__item">
               <label className="fieldset__label">
                 - по убыванию цены
-                <input className="fieldset__check" type="radio" name="sort" value="PriceHighFirst"/>
+                <input onChange={handleOnClickRadio} className="fieldset__check" type="radio" name="sort" value={SortKey.HighUp}/>
               </label>
             </li>
             <li className="sort__item">
               <label className="fieldset__label">
                 - по времени в пути
-                <input className="fieldset__check" type="radio" name="sort" value="TravelDuration"/>
+                <input onChange={handleOnClickRadio} className="fieldset__check" type="radio" name="sort" value={SortKey.Duration}/>
               </label>
             </li>
           </ul>
@@ -67,20 +79,9 @@ function SortSection ():JSX.Element {
         <fieldset className="fieldset form__fieldset">
           <legend className="legend fieldset__legend">Авиакомпании</legend>
           <ul className="fieldset__list">
-            <li className="fieldset__item">
-              <label className="fieldset__label fieldset__label--airlines">
-                <span className="fieldset__label-span">- LOT Polish Airlines</span>
-                <span className="fieldset__label-span"> от 21390 р.</span>
-                <input className="fieldset__check" type="checkbox" />
-              </label>
-            </li>
-            <li className="sort__item">
-              <label className="label fieldset__label fieldset__label--airlines">
-                <span className="fieldset__label-span">- Аэрофлот - российские авиалинии</span>
-                <span className="fieldset__label-span"> от 31733 р.</span>
-                <input className="fieldset__check" type="checkbox" />
-              </label>
-            </li>
+            {checkCarriers.map((checkCarrier) => (
+              <CheckCarrier key={`CheckCarrier-${checkCarrier.label}`} checkCarrier={checkCarrier} />
+            ))}
           </ul>
         </fieldset>
       </form>

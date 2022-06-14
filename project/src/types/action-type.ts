@@ -4,10 +4,14 @@ import {StateType} from './state-type';
 import {Action} from 'redux';
 
 export enum ActionType {
+  SetCheckCarriers = '/setCheckCarriers',
+  SetCount = '/setCount',
+  SetFlights = '/setFlights',
   SetIsLoaded = '/setIsLoaded',
   SetIsLoading = '/setIsLoading',
-  SetFlights = '/setFlights',
   RedirectToRoute = '/redirectToRoute',
+  SetOrigFlights = '/setOrigFlights',
+  SetSortKey = '/setSortKey',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, StateType, AxiosInstance, Action>;
