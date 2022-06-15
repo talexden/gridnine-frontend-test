@@ -1,11 +1,17 @@
-import {ChangeEvent, KeyboardEvent} from 'react';
-import {getFilterPrice} from '../../store/app-search/selectors';
+import {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react';
+import {getCatalogPrice, getUserPrice} from '../../store/app-search/selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import {setFilterPrice} from '../../store/action';
+import {renderFlights, setUserPrice} from '../../store/action';
 
 function FilterPrice () {
-  let filterPrice = useSelector(getFilterPrice);
+  const userPrice = useSelector(getUserPrice);
+  const catalogPrice = useSelector(getCatalogPrice);
   const dispatch = useDispatch();
+  const [price, setPrice] = useState(userPrice);
+
+  useEffect(()=> {
+    setPrice(userPrice);
+  }, [userPrice]);
 
   const handleChangePrice = ( evt: ChangeEvent<HTMLInputElement>) => {
     let {value} = evt.target;
@@ -14,17 +20,18 @@ function FilterPrice () {
     while (value[0] === '0') {
       value = value.replace(/^0/, '');
     }
-    filterPrice = {...filterPrice, [name]: Number(value)};
+    setPrice({...price, [name]: value});
   };
 
   const handlePressEnter = ( evt: KeyboardEvent<HTMLInputElement>) => {
     if ( evt.key === 'Enter') {
-      dispatch(setFilterPrice(filterPrice));
+      dispatch(setUserPrice(price));
+      dispatch(renderFlights());
     }
   };
 
   const handleOnBlur = () => {
-    dispatch(setFilterPrice(filterPrice));
+    dispatch(setUserPrice(price));
   };
 
   return(
@@ -41,7 +48,8 @@ function FilterPrice () {
               className="fieldset__text"
               type="text"
               name="priceMin"
-              placeholder={String(filterPrice.priceMin)}
+              placeholder={catalogPrice.priceMin}
+              value={price.priceMin}
             />
           </label>
         </li>
@@ -55,7 +63,8 @@ function FilterPrice () {
               className="fieldset__text"
               type="text"
               name="priceMax"
-              placeholder={String(filterPrice.priceMax)}
+              placeholder={catalogPrice.priceMax}
+              value={price.priceMax}
             />
           </label>
         </li>

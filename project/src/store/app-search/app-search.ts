@@ -1,69 +1,77 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
-  setIsLoading,
-  setIsLoaded,
-  setFlights,
-  setCount,
-  setOrigFlights,
-  setSortKey, setCheckCarriers, setCheckFlightChanges, renderFlights, setFilterPrice
+  setIsLoading, setIsLoaded, setCount, setOrigFlights, setSortKey, setCheckCarriers, setCheckFlightChanges,
+  renderFlights, setUserPrice
 } from '../action';
 import {FlightType} from '../../types/flight-type';
-import {SortKey} from '../../common/const';
+import {PRICE_INIT, SortKey} from '../../common/const';
 import {ShowCount} from '../logic/count/count';
 import Flight from '../logic/flight/flight';
-import Checkbox from '../logic/checkbox/checkbox';
 import {CarrierCheckboxType, FlightChangeCheckboxType} from '../../types/checkbox-type';
-import {FilterPriceType} from '../../types/filter-price-type';
+import {CatalogPriceType} from '../../types/catalog-price-type';
 
 export type AppSearchType = {
+  currentPrice: CatalogPriceType | null,
   checkCarriers: CarrierCheckboxType[],
   checkFlightChanges: FlightChangeCheckboxType[],
-  filterPrice: FilterPriceType,
+  catalogPrice: CatalogPriceType,
   isLoading: boolean,
   isShowMoreButton: boolean,
   flightsByCheck: FlightType[],
+  flightsByPrice: FlightType[],
   origFlights: FlightType[],
   sortKey: SortKey | null,
   showCount: number,
   showFlights: FlightType[],
   sortedFlights: FlightType[],
+  userPrice: CatalogPriceType,
 }
 
 const initialStore: AppSearchType = {
+  catalogPrice: PRICE_INIT,
   checkCarriers: [],
   checkFlightChanges: [],
-  filterPrice: {priceMin: 0, priceMax: 0},
+  currentPrice: null,
   isLoading: false,
   isShowMoreButton: true,
   flightsByCheck: [],
+  flightsByPrice: [],
   origFlights: [],
   sortKey: null,
   showCount: ShowCount.init(),
   showFlights: [],
   sortedFlights: [],
+  userPrice: PRICE_INIT,
+
 };
 
 export const AppSearch = createReducer(initialStore, (builder)=>{
   builder
 
     .addCase(renderFlights, (state) => {
-      state.flightsByCheck = Checkbox.filterByCheckbox(state.origFlights, state.checkCarriers, state.checkFlightChanges);
-      state.sortedFlights = state.sortKey ? Flight.sort(state.flightsByCheck, state.sortKey): state.flightsByCheck;
+      const price = Flight.getPrice(state.flightsByCheck, state.userPrice);
+      state.catalogPrice = price.catalogPrice;
+      state.currentPrice = price.currentPrice;
+      state.userPrice = price.userPrice;
+      state.flightsByPrice = Flight.priceFiltering(state.flightsByCheck, state.currentPrice);
+      state.sortedFlights = state.sortKey ? Flight.sort(state.flightsByPrice, state.sortKey): state.flightsByPrice;
       state.showCount = ShowCount.init();
       state.showFlights = Flight.show(state.sortedFlights, state.showCount);
-      state.isShowMoreButton = Flight.getIsShowMoreButton();
+      state.isShowMoreButton = state.showFlights.length !== state.sortedFlights.length;
     })
 
     .addCase(setCheckCarriers, (state, action) => {
       state.checkCarriers = action.payload;
+      state.flightsByCheck = Flight.checkboxFiltering(state.origFlights, state.checkCarriers, state.checkFlightChanges);
     })
 
     .addCase(setCheckFlightChanges, (state, action) => {
       state.checkFlightChanges = action.payload;
+      state.flightsByCheck = Flight.checkboxFiltering(state.origFlights, state.checkCarriers, state.checkFlightChanges);
     })
 
-    .addCase(setFilterPrice, (state, action) => {
-      state.filterPrice = action.payload;
+    .addCase(setUserPrice, (state, action) => {
+      state.userPrice = action.payload;
     })
 
     .addCase(setIsLoaded, (state) => {
@@ -79,24 +87,20 @@ export const AppSearch = createReducer(initialStore, (builder)=>{
       state.showFlights = Flight.show(state.sortedFlights, state.showCount);
     })
 
-    .addCase(setFlights, (state, action) => {
-      state.showFlights = action.payload;
-    })
-
     .addCase(setOrigFlights, (state, action) => {
       state.origFlights = action.payload;
-      const flightInit = Flight.init(state.origFlights);
-      state.checkFlightChanges = flightInit.flightChangesSet;
-      state.checkCarriers = flightInit.carriersSet;
-      state.filterPrice = flightInit.priceInit;
+      const checkboxInit = Flight.checkboxInit(state.origFlights);
+      state.checkFlightChanges = checkboxInit.flightChangesSet;
+      state.checkCarriers = checkboxInit.carriersSet;
+      state.flightsByCheck = Flight.checkboxFiltering(state.origFlights, state.checkCarriers, state.checkFlightChanges);
     })
 
     .addCase(setSortKey, (state, action) => {
       state.sortKey = action.payload;
-      state.sortedFlights = Flight.sort(state.flightsByCheck, state.sortKey);
+      state.sortedFlights = Flight.sort(state.flightsByPrice, state.sortKey);
       state.showCount = ShowCount.init();
       state.showFlights = Flight.show(state.sortedFlights, state.showCount);
-      state.isShowMoreButton = Flight.getIsShowMoreButton();
+      state.isShowMoreButton = state.showFlights.length !== state.sortedFlights.length;
     });
 });
 

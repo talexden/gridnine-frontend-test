@@ -1,73 +1,42 @@
 import {FlightType} from '../../../types/flight-type';
 import {SortKey} from '../../../common/const';
-import {getFlightChangeName, sortFlights} from '../../../common/utils';
+import {sortFlights} from '../../../common/utils';
 import {CarrierCheckboxType, FlightChangeCheckboxType} from '../../../types/checkbox-type';
-import {FilterPriceType} from '../../../types/filter-price-type';
-
-type FlightInitType = {
-  flightChangesSet: FlightChangeCheckboxType[],
-  carriersSet: CarrierCheckboxType[],
-  priceInit: FilterPriceType,
-}
+import {CatalogPriceType} from '../../../types/catalog-price-type';
+import {PriceResultType} from '../../../types/price-result-type';
+import {flightGetPrice} from './utils/flight-get-price';
+import {FlightInitType} from '../../../types/flight-init-type';
+import {flightCheckboxInit} from './utils/flight-checkbox-init';
+import {flightCheckboxFiltering} from './utils/flight-checkbox-filtering';
 
 
 class Flight {
-  #isShowMoreButton = true;
 
-  show = (flights: FlightType[], endIdx: number, startIdx = 0): FlightType[] => {
-    const resFlights = flights.slice(startIdx, endIdx);
+  static show = (flights: FlightType[], endIdx: number, startIdx = 0): FlightType[] => flights.slice(startIdx, endIdx);
 
-    this.#isShowMoreButton = flights.length !== resFlights.length;
-    return resFlights;
+  static getPrice = (flights: FlightType[], price: CatalogPriceType): PriceResultType => flightGetPrice(flights, price);
+
+  static sort = (flights: FlightType[], sortKey: SortKey): FlightType[] => sortFlights(flights, sortKey);
+
+  static priceFiltering = (flights: FlightType[], {...price}: CatalogPriceType): FlightType[] => {
+    if (Number(price.priceMax) < Number(price.priceMin)) {
+      [price.priceMax, price.priceMin] = [price.priceMin, price.priceMax];
+    }
+    return flights.filter((flight) => (
+      Number(flight.priceTotal.amount) >= Number(price.priceMin)
+      && Number(flight.priceTotal.amount) <= Number(price.priceMax)));
   };
 
-  getIsShowMoreButton = () => this.#isShowMoreButton;
+  static checkboxInit = (flights: FlightType[]): FlightInitType => flightCheckboxInit(flights);
 
-  sort = (flights: FlightType[], sortKey: SortKey): FlightType[] => sortFlights(flights, sortKey);
+  static checkboxFiltering = (
+    flights: FlightType[],
+    checkCarriers: CarrierCheckboxType[],
+    checkFlightChanges: FlightChangeCheckboxType[],
+  ): FlightType[] => flightCheckboxFiltering(flights, checkCarriers, checkFlightChanges);
 
-  filter = (flights: FlightType[], filterKey: string): FlightType[] => (
-    filterKey ? flights.filter((flight) => flight.carrier.airlineCode === filterKey) : []
-  );
-
-  init = (flights: FlightType[]): FlightInitType => {
-    const carriersMap = new Map<string, CarrierCheckboxType>();
-    const priceInit: FilterPriceType = {
-      priceMin: Number(flights[0].priceTotal.amount),
-      priceMax: Number(flights[0].priceTotal.amount),
-    };
-    flights.forEach((flight) => {
-      const key = flight.carrier.airlineCode;
-      const mapValue = carriersMap.get(key);
-      const price = Number(flight.priceTotal.amount);
-      let carrierPrice = flight.priceTotal.amount;
-      priceInit.priceMin = priceInit.priceMin > price ? price : priceInit.priceMin;
-      priceInit.priceMax = priceInit.priceMax < price ? price : priceInit.priceMax;
-      if (mapValue) {
-        carrierPrice = Number(mapValue.bestPrice) < Number(carrierPrice) ? mapValue.bestPrice : carrierPrice;
-      }
-      carriersMap.set(
-        key,
-        {
-          value: flight.carrier.airlineCode,
-          label: flight.carrier.caption,
-          isCheck: false,
-          bestPrice: carrierPrice,
-        },
-      );
-    });
-    const carriersSet: CarrierCheckboxType[] = Array.from(carriersMap.values());
-    const flightChanges: number[] = [...new Set((flights.flatMap((flight) => flight.legs.map((leg) => leg.flightChange))))];
-    const flightChangesSet = flightChanges.map((change)=> (
-      {
-        value: String(change),
-        isCheck: false,
-        label: getFlightChangeName(change),
-      }),
-    );
-    return {flightChangesSet, carriersSet, priceInit};
-  };
 
 }
 
 
-export default new Flight();
+export default Flight;

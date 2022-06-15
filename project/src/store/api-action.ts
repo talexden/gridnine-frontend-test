@@ -9,8 +9,8 @@ export const fetchFlights = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try{
       dispatch(setIsLoading());
-      const {data} = await api.get(APIRoute.Search);
-      const flights: FlightType[] = data.result.flights.map(Adapter.adaptToClient);
+      const {data} = await api.get(APIRoute.Result);
+      const flights: FlightType[] = data.flights.map(Adapter.adaptToClient);
       dispatch(setOrigFlights(flights));
       dispatch(renderFlights());
       dispatch(setIsLoaded());

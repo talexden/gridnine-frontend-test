@@ -1,3 +1,5 @@
+import {CatalogPriceType} from '../types/catalog-price-type';
+
 export const COUNT_INIT = 2;
 export const COUNT_STEP = 2;
 
@@ -8,7 +10,7 @@ export enum AppRoute {
 }
 
 export enum APIRoute {
-  Search = '/search',
+  Result = '/result',
 }
 
 export enum SortKey {
@@ -25,5 +27,9 @@ export enum ErrorTexts {
   LoadGuitarsFailMessage = 'Сервер не доступен. Попробуйте попозже',
 }
 
+export const PRICE_INIT: CatalogPriceType = {
+  priceMin: '',
+  priceMax: '',
+};
 
 export const HIDDEN_TAB_INDEX = -1;

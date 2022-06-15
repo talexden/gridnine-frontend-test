@@ -3,7 +3,7 @@ import {AppRoute, SortKey} from '../common/const';
 import {ActionType} from '../types/action-type';
 import {FlightType} from '../types/flight-type';
 import {CarrierCheckboxType, FlightChangeCheckboxType} from '../types/checkbox-type';
-import {FilterPriceType} from '../types/filter-price-type';
+import {CatalogPriceType} from '../types/catalog-price-type';
 
 
 export const redirectToRoute = createAction(
@@ -28,16 +28,10 @@ export const setCheckFlightChanges = createAction(
 
 export const setCount = createAction(ActionType.SetCount);
 
-export const setFlights = createAction(
-  ActionType.SetFlights,
-  (flights: FlightType[]) => (
-    {payload: flights}
-  ));
-
-export const setFilterPrice = createAction(
-  ActionType.SetFilterPrice,
-  (filterPrice: FilterPriceType) => (
-    {payload: filterPrice}
+export const setUserPrice = createAction(
+  ActionType.SetUserPrice,
+  (userPrice: CatalogPriceType) => (
+    {payload: userPrice}
   ));
 
 export const setIsLoading = createAction(ActionType.SetIsLoading);

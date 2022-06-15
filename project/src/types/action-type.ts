@@ -6,11 +6,10 @@ import {Action} from 'redux';
 export enum ActionType {
   RenderFlights = '/renderFlights',
   RedirectToRoute = '/redirectToRoute',
+  SetUserPrice = '/setUserPrice',
   SetCheckCarriers = '/setCheckCarriers',
   SetCheckFlightChanges = '/setCheckFlightChanges',
   SetCount = '/setCount',
-  SetFlights = '/setFlights',
-  SetFilterPrice = '/setFilterPrice',
   SetIsLoaded = '/setIsLoaded',
   SetIsLoading = '/setIsLoading',
   SetOrigFlights = '/setOrigFlights',
