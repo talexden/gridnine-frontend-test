@@ -4,7 +4,6 @@
 
 ## Выполнил [Алектей Титов](https://github.com/talexden)
 
-### `npm start`
 ### В проекте использованы технологии: 
 ##### Typescript, React, Redux, Axios. 
 
